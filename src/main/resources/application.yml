@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:mydatabase}
+    username: ${POSTGRES_USER:myusername}
+    password: ${POSTGRES_PASSWORD:mypassword}
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+
+  jdbc:
+    template:
+      query-timeout: 30s
