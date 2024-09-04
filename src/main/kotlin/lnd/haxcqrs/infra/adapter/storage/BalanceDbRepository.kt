@@ -24,8 +24,8 @@ class BalanceDbRepository(private val jdbcTemplate: JdbcTemplate) : BalanceRepos
                 createdDate = rs.getTimestamp("createdDate").toLocalDateTime()
         )
     }
+
     override fun returnBalanceById(balanceId: String): Balance? {
-//        return null
         return try {
             jdbcTemplate.queryForObject(
                     "SELECT * FROM balance WHERE id = ? ORDER BY version DESC LIMIT 1",
@@ -38,6 +38,18 @@ class BalanceDbRepository(private val jdbcTemplate: JdbcTemplate) : BalanceRepos
     }
 
     override fun saveBalance(balance: Balance): Balance {
+        val sql = """
+        INSERT INTO balance (id, transactionId, amount, version, balance, createdDate)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """
+        jdbcTemplate.update(sql,
+                balance.id,
+                balance.transactionId,
+                balance.amount,
+                balance.version,
+                balance.balance,
+                balance.createdDate
+        )
         return balance
     }
 

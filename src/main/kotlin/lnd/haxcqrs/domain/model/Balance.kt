@@ -28,4 +28,5 @@ data class Balance(
 
         @field:NotNull
         val createdDate: LocalDateTime = LocalDateTime.now()
+
 )
