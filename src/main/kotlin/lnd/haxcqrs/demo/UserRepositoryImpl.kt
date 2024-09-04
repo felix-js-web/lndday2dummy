@@ -1,4 +1,4 @@
-package com.example.demo
+package lnd.haxcqrs.demo
 
 import org.springframework.context.annotation.Profile
 import org.springframework.jdbc.core.JdbcTemplate

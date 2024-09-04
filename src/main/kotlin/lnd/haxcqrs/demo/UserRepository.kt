@@ -1,4 +1,4 @@
-package com.example.demo
+package lnd.haxcqrs.demo
 
 interface UserRepository{
     fun findAll(): List<User>

@@ -1,10 +1,12 @@
-package com.example.demo
+package haxcqrs
 
+import lnd.haxcqrs.DemoApplication
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
-@SpringBootTest
+
+@SpringBootTest(classes = [DemoApplication::class])
 @ActiveProfiles("test")
 class DemoApplicationTests {
 

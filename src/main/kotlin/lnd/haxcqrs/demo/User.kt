@@ -1,4 +1,4 @@
-package com.example.demo
+package lnd.haxcqrs.demo
 
 data class User(
         var id: Long?,

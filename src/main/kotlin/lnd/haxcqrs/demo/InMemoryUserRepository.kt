@@ -1,4 +1,4 @@
-package com.example.demo
+package lnd.haxcqrs.demo
 
 import jakarta.annotation.PostConstruct
 import org.springframework.context.annotation.Profile

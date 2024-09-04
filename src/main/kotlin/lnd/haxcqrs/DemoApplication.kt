@@ -1,4 +1,4 @@
-package com.example.demo
+package lnd.haxcqrs
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
