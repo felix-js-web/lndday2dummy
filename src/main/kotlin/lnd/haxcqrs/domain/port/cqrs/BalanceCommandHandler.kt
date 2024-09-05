@@ -18,16 +18,14 @@ class BalanceCommandHandler(private val balanceRepository: BalanceRepository) {
         return if (getCurrentBalance != null) {
             existingWalletValidationAndSaving(getCurrentBalance, transaction)
         } else {
-            newWalletValidatiionAndCreation(transaction)
+            newWalletValidationAndCreation(transaction)
         }
     }
 
-    private fun newWalletValidatiionAndCreation(transaction: Transaction): Balance {
+    private fun newWalletValidationAndCreation(transaction: Transaction): Balance {
         if (transaction.amount < 0) {
-            LOGGER.error(String.format("You can not debit the nonexisting wallet please credit it first for wallet id %s and transaction id %s where transaction amount id %d",
-                    transaction.id, transaction.transactionId, transaction.amount))
-            throw WalletDoesNotExistException(String.format("You can not debit the unexisting wallet please credit it first for wallet id %s and transaction id %s where transaction amount id %d",
-                    transaction.id, transaction.transactionId, transaction.amount))
+            LOGGER.error(String.format("You can not debit the nonexisting wallet please credit it first for wallet id %s and transaction id %s where transaction amount id %d", transaction.id, transaction.transactionId, transaction.amount))
+            throw WalletDoesNotExistException(String.format("You can not debit the unexisting wallet please credit it first for wallet id %s and transaction id %s where transaction amount id %d", transaction.id, transaction.transactionId, transaction.amount))
         }
         return balanceRepository.saveBalance(Balance(transaction.id, transaction.transactionId, transaction.amount, 1, transaction.amount))
     }
@@ -35,13 +33,11 @@ class BalanceCommandHandler(private val balanceRepository: BalanceRepository) {
     private fun existingWalletValidationAndSaving(getCurrentBalance: Balance, transaction: Transaction): Balance {
         if (getCurrentBalance.transactionId == transaction.transactionId) {
             LOGGER.error(String.format("Transaction id %s already exists for wallet id %s", transaction.transactionId, transaction.id))
-            throw DuplicatedTransactionException(String.format("Transaction id %s already exists for wallet id %s", transaction.transactionId, transaction.id))
+            throw DuplicatedTransactionException(String.format("Transaction id %s already exists for wallet id %s", transaction.transactionId, transaction.id), getCurrentBalance)
         }
         if (getCurrentBalance.balance + transaction.amount < 0) {
-            LOGGER.error(String.format("Balance cannot be negative for wallet id %s and transaction id %s where current amount is %d and transaction amount id %d",
-                    transaction.id, transaction.transactionId, getCurrentBalance.balance, transaction.amount))
-            throw InsufficientFundsException(String.format("Balance cannot be negative for wallet id %s and transaction id %s where current amount is %d and transaction amount id %d",
-                    transaction.id, transaction.transactionId, getCurrentBalance.balance, transaction.amount))
+            LOGGER.error(String.format("Balance cannot be negative for wallet id %s and transaction id %s where current amount is %d and transaction amount id %d", transaction.id, transaction.transactionId, getCurrentBalance.balance, transaction.amount))
+            throw InsufficientFundsException(String.format("Balance cannot be negative for wallet id %s and transaction id %s where current amount is %d and transaction amount id %d", transaction.id, transaction.transactionId, getCurrentBalance.balance, transaction.amount))
         }
         return balanceRepository.saveBalance(Balance(transaction.id, transaction.transactionId, transaction.amount, getCurrentBalance.version + 1, getCurrentBalance.balance + transaction.amount))
     }

@@ -1,5 +1,8 @@
 package lnd.haxcqrs.domain.exception
 
+import lnd.haxcqrs.domain.model.Balance
+
 class DuplicatedTransactionException(
-        exceptionString: String
-) : RuntimeException(exceptionString)
+        message: String,
+        val duplicatedBalance: Balance
+) : RuntimeException(message)

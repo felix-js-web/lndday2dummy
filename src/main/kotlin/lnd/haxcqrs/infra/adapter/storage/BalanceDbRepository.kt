@@ -54,17 +54,3 @@ class BalanceDbRepository(private val jdbcTemplate: JdbcTemplate) : BalanceRepos
     }
 
 }
-
-//    private val rowMapper = RowMapper<User> { rs, _ ->
-//        User(
-//                id = rs.getLong("id"),
-//                name = rs.getString("name")
-//        )
-//    }
-//
-//    override fun findAll(): List<User> =
-//            jdbcTemplate.query("SELECT * FROM users", rowMapper)
-//
-//    override fun save(user: User): Int =
-//            jdbcTemplate.update("INSERT INTO users (name) VALUES (?)", user.name)
-//}
