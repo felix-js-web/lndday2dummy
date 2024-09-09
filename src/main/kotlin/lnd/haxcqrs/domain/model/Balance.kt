@@ -2,13 +2,12 @@ package lnd.haxcqrs.domain.model
 
 import jakarta.validation.constraints.*
 import java.time.LocalDateTime
+import java.util.*
 
 data class Balance(
 
         @field:NotNull
-        @field:Size(min = 1, max = 50)
-        @field:NotBlank
-        val id: String,
+        val id: UUID,
 
         @field:NotNull
         @field:Size(min = 1, max = 50)

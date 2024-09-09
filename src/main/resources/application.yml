@@ -14,3 +14,16 @@ spring:
   jdbc:
     template:
       query-timeout: 30s
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+  health:
+    readinessState:
+      enabled: true

@@ -4,16 +4,16 @@ import lnd.haxcqrs.domain.exception.InsufficientFundsException
 import lnd.haxcqrs.domain.exception.WalletDoesNotExistException
 import lnd.haxcqrs.domain.repository.BalanceRepository
 import lnd.haxcqrs.domain.model.Balance
-import io.github.oshai.kotlinlogging.KotlinLogging
+import org.slf4j.LoggerFactory
 import lnd.haxcqrs.domain.exception.DuplicatedTransactionException
 import org.springframework.stereotype.Component
 
 @Component
 class BalanceCommandHandler(private val balanceRepository: BalanceRepository) {
-    private val LOGGER = KotlinLogging.logger {};
+    private val LOGGER = LoggerFactory.getLogger(BalanceCommandHandler::class.java)
 
     fun addTransactionAndReturnBalance(transaction: Transaction): Balance {
-        LOGGER.info { "Initiating balance transactions for wallet id ${transaction.id} and transaction id ${transaction.transactionId} and amount ${transaction.amount}" }
+        LOGGER.info("Initiating balance transactions for wallet id ${transaction.id} and transaction id ${transaction.transactionId} and amount ${transaction.amount}")
         val getCurrentBalance = balanceRepository.returnBalanceById(transaction.id);
         return if (getCurrentBalance != null) {
             existingWalletValidationAndSaving(getCurrentBalance, transaction)
